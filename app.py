@@ -1,18 +1,16 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-
-@app.route('/slack-webhook', methods=['POST'])
-def slack_webhook():
-    data = request.get_json()
-    
-    if data.get("type") == "url_verification":
-        return data.get("challenge"), 200  # ← Slack検証用
-    
-    return jsonify(data), 200  # ← 通常はそのままecho
-
-
-@app.route('/')
+@app.route("/", methods=["GET"])
 def health_check():
-    return 'OK', 200
+    return "OK", 200
+
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    data = request.json
+    print("Received:", data)
+    return jsonify({"status": "received"}), 200
+
+if __name__ == "__main__":
+    app.run(debug=True)
