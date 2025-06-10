@@ -10,7 +10,6 @@ def health_check():
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.json
-    print(request)
     print("Received:", data)
 
     # challengeがある場合はその値を返す
