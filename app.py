@@ -11,6 +11,11 @@ def health_check():
 def webhook():
     data = request.json
     print("Received:", data)
+
+    # challengeがある場合はその値を返す
+    if "challenge" in data:
+        return jsonify({"challenge": data["challenge"]}), 200
+
     return jsonify({"status": "received"}), 200
 
 if __name__ == "__main__":
